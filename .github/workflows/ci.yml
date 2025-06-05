@@ -16,14 +16,15 @@ jobs:
       - name: Prepare repository
         run: git fetch --unshallow --tags
 
+      - name: Import GPG
+        uses: crazy-max/ghaction-import-gpg@v6.3.0
+        with:
+          gpg_private_key: ${{ secrets.SIGNING_KEY }}
+          passphrase: ${{ secrets.SIGNING_PASS }}
+
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GPG_KEY: ${{ secrets.SIGNING_KEY }}
-          DEPLOY_MAVEN_GPG_PASSPHRASE: ${{ secrets.SIGNING_PASS }}
           DEPLOY_MAVEN_USERNAME: ${{ secrets.SONA_USER }}
           DEPLOY_MAVEN_PASSWORD: ${{ secrets.SONA_PASS }}
-        run:
-          echo -e $GPG_KEY | gpg --import --batch
-          echo -e "pinentry-mode loopback\npassphrase $DEPLOY_MAVEN_GPG_PASSPHRASE" > ~/.gnupg/gpg.conf
-          ~/auto shipit -vvv
+        run: ~/auto shipit -vvv
