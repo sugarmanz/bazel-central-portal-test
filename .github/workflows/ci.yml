@@ -22,9 +22,11 @@ jobs:
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASS }}
-          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONA_USER }}
-          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONA_PASS }}
-          ORG_GRADLE_PROJECT_sonatypeStagingId: ${{ secrets.SONA_STAGE }}
-        run: ~/auto shipit -vvv
+          GPG_KEY: ${{ secrets.SIGNING_KEY }}
+          DEPLOY_MAVEN_GPG_PASSPHRASE: ${{ secrets.SIGNING_PASS }}
+          DEPLOY_MAVEN_USERNAME: ${{ secrets.SONA_USER }}
+          DEPLOY_MAVEN_PASSWORD: ${{ secrets.SONA_PASS }}
+        run:
+          echo -e $GPG_KEY | gpg --import --batch
+          echo -e "pinentry-mode loopback\npassphrase $DEPLOY_MAVEN_GPG_PASSPHRASE" > ~/.gnupg/gpg.conf
+          ~/auto shipit -vvv
