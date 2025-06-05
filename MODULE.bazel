@@ -4,11 +4,10 @@ module(
 )
 
 bazel_dep(name = "rules_player")
-archive_override(
+git_override(
     module_name = "rules_player",
-    strip_prefix = "rules_player-1.1.6",
-    urls = ["https://github.com/player-ui/rules_player/archive/refs/tags/v1.1.6.tar.gz"],
-    integrity = "sha256-5Sa+Ssko8dJvEFegYdqgBpfLp1gQlPFxkmy2l8MLw/o=",
+    commit = "9130cf2fb09d9df6a4de96c2da62166c829005f9",
+    remote = "https://github.com/player-ui/rules_player.git",
 )
 
 bazel_dep(name = "rules_jvm_external")

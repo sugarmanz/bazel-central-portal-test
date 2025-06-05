@@ -19,4 +19,4 @@ elif [ "$RELEASE_TYPE" == "release" ] && [ "$CURRENT_BRANCH" == "main" ]; then
 fi
 
 echo "Publishing Maven Packages with release type: ${MVN_RELEASE_TYPE} on branch: ${CURRENT_BRANCH}"
-bazel run --config=release @rules_player//distribution:staged-maven-deploy -- "$MVN_RELEASE_TYPE" --package-group=com.sugarmanz.test --nexus-url="$MVN_NEXUS_URL" --client-timeout=600 --connect-timeout=600
+bazel run @rules_player//distribution:staged-maven-deploy -- "$MVN_RELEASE_TYPE" --package-group=com.sugarmanz.test --nexus-url="$MVN_NEXUS_URL" --client-timeout=600 --connect-timeout=600
