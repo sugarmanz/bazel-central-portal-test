@@ -1,0 +1,20 @@
+{
+  "name": "Jeremiah Zucker",
+  "email": "zucker.jeremiah@gmail.com",
+  "baseBranch": "main",
+  "noVersionPrefix": true,
+  "owner": "sugarmanz",
+  "repo": "bazel-central-portal-test",
+  "plugins": [
+    [
+      "version-file",
+      {
+        "versionFile": "./VERSION",
+        "publishScript": "./scripts/release.sh",
+        "publishScriptReleaseTypeArgs": {
+          "next": ["next"]
+        }
+      }
+    ]
+  ]
+}

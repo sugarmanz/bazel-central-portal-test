@@ -1,0 +1,30 @@
+name: CI
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - name: Install Auto
+        run: |
+          curl -vkL -o - https://github.com/intuit/auto/releases/download/v11.3.0/auto-linux.gz | gunzip > ~/auto
+          chmod a+x ~/auto
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare repository
+        run: git fetch --unshallow --tags
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASS }}
+          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONA_USER }}
+          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONA_PASS }}
+          ORG_GRADLE_PROJECT_sonatypeStagingId: ${{ secrets.SONA_STAGE }}
+        run: ~/auto shipit -vvv

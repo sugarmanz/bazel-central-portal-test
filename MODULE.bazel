@@ -1,0 +1,19 @@
+module(
+    name = "bazel-central-portal-test",
+    version = "1.0",
+)
+
+bazel_dep(name = "rules_player")
+archive_override(
+    module_name = "rules_player",
+    strip_prefix = "rules_player-1.1.6",
+    urls = ["https://github.com/player-ui/rules_player/archive/refs/tags/v1.1.6.tar.gz"],
+    integrity = "sha256-5Sa+Ssko8dJvEFegYdqgBpfLp1gQlPFxkmy2l8MLw/o=",
+)
+
+bazel_dep(name = "rules_jvm_external")
+git_override(
+    module_name = "rules_jvm_external",
+    commit = "73b63ba801f14d1bde7807994cc8c15db226ceec",
+    remote = "https://github.com/sugarmanz/rules_jvm_external.git",
+)

@@ -1,0 +1,1 @@
+workspace(name = "bazel-central-portal-test")
