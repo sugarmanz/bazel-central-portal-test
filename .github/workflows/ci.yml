@@ -16,15 +16,15 @@ jobs:
       - name: Prepare repository
         run: git fetch --unshallow --tags
 
-      - name: Build
-        run: ./gradlew build
+      - name: Import GPG
+        uses: crazy-max/ghaction-import-gpg@v6.3.0
+        with:
+          gpg_private_key: ${{ secrets.SIGNING_KEY }}
+          passphrase: ${{ secrets.SIGNING_PASS }}
 
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASS }}
-          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONA_USER }}
-          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONA_PASS }}
-          ORG_GRADLE_PROJECT_sonatypeStagingId: ${{ secrets.SONA_STAGE }}
+          DEPLOY_MAVEN_USERNAME: ${{ secrets.SONA_USER }}
+          DEPLOY_MAVEN_PASSWORD: ${{ secrets.SONA_PASS }}
         run: ~/auto shipit -vvv
