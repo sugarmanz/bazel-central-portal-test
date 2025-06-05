@@ -24,7 +24,7 @@ jobs:
 
       - name: Release
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           DEPLOY_MAVEN_USERNAME: ${{ secrets.SONA_USER }}
           DEPLOY_MAVEN_PASSWORD: ${{ secrets.SONA_PASS }}
           MAVEN_USER: ${{ secrets.SONA_USER }}
