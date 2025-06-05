@@ -29,4 +29,5 @@ jobs:
           DEPLOY_MAVEN_PASSWORD: ${{ secrets.SONA_PASS }}
           MAVEN_USER: ${{ secrets.SONA_USER }}
           MAVEN_PASSWORD: ${{ secrets.SONA_PASS }}
+          GPG_SIGN: true
         run: ~/auto shipit -vvv
